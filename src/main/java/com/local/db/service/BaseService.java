@@ -45,13 +45,13 @@ public class BaseService {
         return true;
     }
 
-    /*public Base createBase(Base base) throws Exception {
+    public Base createBase(Base base) throws Exception {
         Base dbBase = baseRepository.findByNameIgnoreCase(base.getName());
         if (dbBase != null)
             throw new Exception("Base with the same name exists!");
 
         return baseRepository.save(base);
-    }*/
+    }
 
     public void removeBase(Base base) {
         baseRepository.delete(base);

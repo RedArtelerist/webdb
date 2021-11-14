@@ -23,8 +23,20 @@ public class RowService {
         rowRepository.save(row);
     }
 
+    public void insertRow(Table table, Row row){
+        row.setTable(table);
+        rowRepository.save(row);
+    }
+
     public void updateRow(Long rowId, Row row) {
         Row rowDb = findById(row.getTable(), rowId);
+        rowDb.setValues(row.getValues());
+
+        rowRepository.save(rowDb);
+    }
+
+    public void editRow(Long rowId, Row row) {
+        Row rowDb = rowRepository.getById(rowId);
         rowDb.setValues(row.getValues());
 
         rowRepository.save(rowDb);

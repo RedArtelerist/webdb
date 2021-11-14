@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TableService {
@@ -43,6 +44,23 @@ public class TableService {
         tableRepository.save(table);
     }
 
+    public void createTable(Base base, Table table) throws Exception {
+        Table dbTable = tableRepository.findByBaseAndNameIgnoreCase(base, table.getName());
+
+        if (dbTable != null)
+            throw new Exception("Table with the same name exists!");
+
+        table.setBase(base);
+        table.getAttributes().forEach(attribute -> attribute.setTable(table));
+
+        for(Attribute attribute : table.getAttributes()){
+            if(attribute.getName().trim().equals("") || attribute.getType() == null)
+                throw new Exception("Error in attributes");
+        }
+
+        tableRepository.save(table);
+    }
+
     public void removeTable(Table table) {
         tableRepository.delete(table);
     }
@@ -57,6 +75,20 @@ public class TableService {
                 rowService.removeRow(row);
             }
         }
+    }
+
+    public List<Long> deleteDuplicates(Table table) {
+        List<Row> uniqueRows = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
+        for(Row row : table.getRows()){
+            if(!uniqueRows.contains(row))
+                uniqueRows.add(row);
+            else {
+                ids.add(row.getId());
+                rowService.removeRow(row);
+            }
+        }
+        return ids;
     }
 
     private List<Attribute> convertToAttributes(Table table, List<String> columns, List<Type> types) {
@@ -80,6 +112,24 @@ public class TableService {
                 return false;
         }
         return true;
+    }
+
+    private List<Attribute> convertStringToAttributes(Table table, List<String> columns, List<String> types) throws Exception {
+        List<Attribute> attributes = new ArrayList<>();
+        for(int i = 0; i < columns.size(); i++){
+            Attribute attribute = new Attribute();
+            String name = columns.get(i);
+            Type type = Type.valueOf(types.get(i));
+
+            if(name.trim().equals(""))
+                throw new Exception("Error in attributes");
+
+            attribute.setName(name);
+            attribute.setType(type);
+            attribute.setTable(table);
+            attributes.add(attribute);
+        }
+        return attributes;
     }
 
 }
