@@ -1,6 +1,7 @@
 package com.local.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Table {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "base_id")
+    @JsonManagedReference
     private Base base;
 
     @OneToMany(mappedBy = "table", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package com.local.db.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Base {
 
     @OneToMany(mappedBy = "base", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
+    //@JsonBackReference
     private List<Table> tables;
 
     public Long getId() {
