@@ -9,7 +9,7 @@
                     <div id="alert" style="display: none" class="alert" role="alert"></div>
                     <div class="card" style="padding: 10px">
 
-                       <#-- <div class="header">
+                       <div class="header">
                             <div class="form-group mt-3 w-50">
                                 <form method="post">
                                     <div class="input-group mb-3">
@@ -29,9 +29,9 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>-->
+                        </div>
 
-                        <div class="header">
+                        <!--<div class="header">
                             <div class="form-group mt-3 w-50">
                                 <form id="add" action="#">
                                     <div id="msg"></div>
@@ -46,7 +46,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="content table-responsive table-full-width">
                             <table id="table" class="table table-striped">
